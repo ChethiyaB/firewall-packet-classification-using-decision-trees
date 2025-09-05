@@ -1,0 +1,42 @@
+seed: 42
+
+data:
+  # local CSV
+  path: "data/firewall.csv"
+  # remote URL
+  url_env: "https://archive.ics.uci.edu/static/public/542/internet+firewall+data.zip"
+
+target: "Action"
+test_size: 0.2
+cv_folds: 5
+scoring: "f1_macro"
+
+preprocess:
+  one_hot_threshold: 20
+  scale_numeric: true
+  impute_strategy: "most_frequent"
+
+resampling:
+  use_smote: true
+  k_neighbors: 5
+
+models:
+  - name: "decision_tree"
+    params:
+      max_depth: 20
+      min_samples_leaf: 2
+  - name: "knn"
+    params:
+      n_neighbors: 5
+      weights: "distance"
+  - name: "random_forest"
+    params:
+      n_estimators: 200
+      max_depth: 20
+      class_weight: "balanced"
+  - name: "adaboost"
+    params:
+      n_estimators: 200
+      learning_rate: 0.5
+
+artifacts_dir: ".artifacts"
