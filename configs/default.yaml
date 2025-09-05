@@ -1,9 +1,9 @@
 seed: 42
 
 data:
-  # local CSV
+  # Option A: local CSV
   path: "data/firewall.csv"
-  # remote URL
+  # Option B: remote URL (set via env FIREWALL_DATA_URL, overrides 'path' if set)
   url_env: "https://archive.ics.uci.edu/static/public/542/internet+firewall+data.zip"
 
 target: "Action"

@@ -1,0 +1,21 @@
+.PHONY: setup lint test train eval docker
+
+setup:
+\tpython -m venv venv && . venv/bin/activate && pip install -r requirements.txt -r requirements-dev.txt
+
+lint:
+\truff check .
+\tblack --check .
+\tmypy src/
+
+test:
+\tpytest -q
+
+train:
+\tpython -m firewall_ml.train --cfg_path=configs/default.yaml
+
+eval:
+\tpython -m firewall_ml.evaluate --model_path .artifacts/adaboost.joblib --data_path data/firewall.csv --target Action
+
+docker:
+\tdocker build -t firewall-ml:latest .
